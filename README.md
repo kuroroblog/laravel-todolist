@@ -32,5 +32,8 @@ laravelを利用して、Todolistを作成する。
 16. `php artisan key:generate`を実行する。
 17. `php artisan serve`を実行する。
 
+# 完成画像
+<img width="1680" alt="screenshot 2021-08-05 14 51 03" src="https://user-images.githubusercontent.com/23373288/128298203-3015c8c5-3be9-4b31-8967-c7cb4d080b3e.png">
+
 # 参考文献
 https://qiita.com/yasuken/items/37a851ea80fb142a8822
