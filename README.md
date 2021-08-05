@@ -27,6 +27,7 @@ laravelを利用して、Todolistを作成する。
 11. {mysqlを接続するためのパスワード}を入力する。
 12. `create database {データベース名};`を入力する。
 13. `quit;`を入力する。
-14. `php artisan migrate`を実行する。
-15. `php artisan serve`を実行する。
+14. `composer update --no-scripts`を実行する。
+15. `php artisan migrate`を実行する。
+16. `php artisan serve`を実行する。
 
