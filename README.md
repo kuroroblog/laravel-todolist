@@ -33,7 +33,7 @@ laravelを利用して、Todolistを作成する。
 17. `php artisan serve`を実行する。
 
 # 完成画像
-<img width="1680" alt="screenshot 2021-08-05 14 51 03" src="https://user-images.githubusercontent.com/23373288/128298203-3015c8c5-3be9-4b31-8967-c7cb4d080b3e.png">
+<img width="1680" alt="screenshot 2021-08-29 10 50 29" src="https://user-images.githubusercontent.com/23373288/131235594-23d7c8d2-bc7e-4fdd-840d-0c7679699e8d.png">
 
 # 参考文献
 https://qiita.com/yasuken/items/37a851ea80fb142a8822
