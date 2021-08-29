@@ -8,35 +8,101 @@ use App\Models\Content;
 class TodoController extends Controller
 {
     /**
-     * Get /からのリクエストを受け付ける。
+     * Get / ページに関するController
+     *
      */
     public function index()
     {
-        /**
-         * 参考 : https://readouble.com/laravel/8.x/ja/eloquent.html
-         */
-        return view('index', ['contents' => Content::all()]);
+        return view('index', ['items' => Content::all()]);
     }
 
     /**
-     * POST /todo/createからのリクエストを受け付ける。
+     * POST /todo/create ページに関するController
      *
-     * @param Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      *
-     * return Get /へリダイレクト。
-     *
-     * リダイレクトとは? : https://semlabo.com/seo/blog/url_redirect/
      */
-    public function insert(Request $request)
+    public function create(Request $request)
     {
         /**
-         * 参考 : https://readouble.com/laravel/8.x/ja/requests.html
+         * 参考 : https://readouble.com/laravel/8.x/ja/validation.html
          */
-        Content::insert($request->input('content'));
-
+        $request->validate(Content::$rules);
+        Content::create($request->all());
         /**
-         * 参考 : https://techacademy.jp/magazine/18787
+         * 参考 : https://readouble.com/laravel/8.x/ja/redirects.html
          */
-        return redirect()->to('/');
+        return redirect('/');
+    }
+
+    /**
+     * POST /todo/delete ページに関するController
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     */
+    public function delete(Request $request)
+    {
+        $content = Content::find($request->id);
+        /**
+         * 参考 : https://www.php.net/manual/ja/function.is-null.php
+         */
+        if (!is_null($content)) {
+            $content->delete();
+        }
+        /**
+         * 参考 : https://readouble.com/laravel/8.x/ja/redirects.html
+         */
+        return redirect('/');
+    }
+
+    /**
+     * POST /todo/update/{id} ページに関するController
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     */
+    public function update(Request $request)
+    {
+        /**
+         * 参考 : https://readouble.com/laravel/8.x/ja/validation.html
+         */
+        $request->validate(Content::$rules);
+        $param = $request->all();
+        unset($param['_token']);
+        Content::where('id', $request->id)->update($param);
+        /**
+         * 参考 : https://readouble.com/laravel/8.x/ja/validation.html
+         */
+        return redirect('/');
+    }
+
+    /**
+     * GET /todo/create ページに関するController
+     *
+     */
+    public function add()
+    {
+        return view('/todo/add');
+    }
+
+    /**
+     * GET /todo/update/{id} ページに関するController
+     *
+     * @param \Illuminate\Http\Request $request
+     */
+    public function edit(Request $request)
+    {
+        $content = Content::find($request->id);
+        /**
+         * 参考 : https://www.php.net/manual/ja/function.is-null.php
+         */
+        if (is_null($content)) {
+            /**
+             * 参考 : https://readouble.com/laravel/8.x/ja/errors.html
+             */
+            abort(404);
+        }
+        return view('/todo/update', ['item' => $content]);
     }
 }

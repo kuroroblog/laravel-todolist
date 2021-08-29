@@ -1,45 +1,59 @@
-<body>
-    <div class="container">
-        <div class="card">
-            <h2>Todo List</h2>
-            <div class="todo">
-            @if (count($errors) > 0)
-                <ul>
-                @foreach ($errors->all() as $error)
-                    <li>
-                        {{$error}}
-                    </li>
-                @endforeach
-                </ul>
-            @endif
-            <form action="/todo/create" method="POST" class="flex">
-                @csrf
-                <input type="hidden">
-                <!-- 参考 : https://qiita.com/oh_rusty_nail/items/e08f6b323d526fab3d55#%E5%85%A5%E5%8A%9B%E6%96%87%E5%AD%97%E6%95%B0%E5%88%B6%E9%99%90 -->
-                <!-- 参考 : https://qiita.com/oh_rusty_nail/items/e08f6b323d526fab3d55#%E5%85%A5%E5%8A%9B%E5%BF%85%E9%A0%88 -->
-                <input type="text" name="content" class="text-add" maxlength='20' required>
-                <input type="submit" value="追加" class="submit-add">
-            </form>
-            <table>
-                <tr>
-                    <th>作成日</th>
-                    <th>タスク名</th>
-                    <th>更新</th>
-                    <th>削除</th>
-                </tr>
-                @foreach ($contents as $content)
-                    <tr>
-                        <td>
-                            {{$content->getCreatedAt()}}
-                        </td>
-                        <td>
-                            <input type="text" name="text-update" class="text-update" value="{{$content->getContent()}}">
-                        </td>
-                        <td>更新</td>
-                        <td>削除</td>
-                    </tr>
-                @endforeach
-            </table>
+<!DOCTYPE html>
+<html lang="ja">
+    {{-- 参考 : https://readouble.com/laravel/8.x/ja/blade.html --}}
+    @include('component.head')
+    <body>
+        <div class="container">
+            <div class="card">
+                <h2>Todo List</h2>
+                <div class="todo">
+
+                    <ul class="error">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+
+                    <form action="/todo/create" method="POST" class="flex">
+                        @csrf
+                        <input type="hidden">
+                        <input type="text" name="content" class="text-add" maxlength="20" required>
+                        <input type="submit" value="追加" class="submit-add">
+                    </form>
+
+                    <table>
+                        <tr>
+                            <th>作成日</th>
+                            <th>タスク名</th>
+                            <th>更新</th>
+                            <th>削除</th>
+                        </tr>
+                        @foreach($items as $item)
+                            <tr>
+                                <td>
+                                    {{ $item->getCreatedAt() }}
+                                </td>
+                                <form action="{{ route('todo.update', ['id' => $item->getId() ]) }}" method="POST">
+                                    @csrf
+                                    <td>
+                                        <input type="text" name="content" class="text-update" value="{{ $item->getContent() }}" maxlength="20" required>
+                                    </td>
+                                    <td>
+                                        <button class="submit-update">更新</button>
+                                    </td>
+                                </form>
+                                <td>
+                                    <form action="/todo/delete" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $item->getId() }}">
+                                        <button class="submit-delete">削除</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+            </div>
         </div>
-    </div>
-</body>
+    </body>
+</html>

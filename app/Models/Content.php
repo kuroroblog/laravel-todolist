@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
 class Content extends Model
@@ -12,27 +12,12 @@ class Content extends Model
 
     protected $fillable = ['content'];
 
-    public static $rules = array('content' => 'required|max:20');
+    public static $rules = [
+        'content' => 'required|max:20',
+    ];
 
     /**
-     * Todoを登録する。
-     *
-     * @param string $content content
-     *
-     * @return void
-     */
-    public static function insert(string $content): void
-    {
-        /**
-         * 参考 : https://readouble.com/laravel/8.x/ja/eloquent.html
-         */
-        $ins          = new Content;
-        $ins->content = $content;
-        $ins->save();
-    }
-
-    /**
-     * Todoの内容を返す。
+     * Todo内容を取得する関数
      *
      * @return string
      */
@@ -42,15 +27,25 @@ class Content extends Model
     }
 
     /**
-     * Todoを作成した時刻を返す。
+     * Todo作成日付を取得する関数
      *
-     * @return string
+     * @return \Carbon\Carbon
      */
-    public function getCreatedAt(): string
+    public function getCreatedAt(): \Carbon\Carbon
     {
         /**
-         * 参考 : https://qiita.com/mackeyTA/items/e8b5e47a9f020a1902c0
+         * Carbon参考 : https://qiita.com/yudsuzuk/items/ff894bd0b76d4657741d
          */
         return new Carbon($this->created_at);
+    }
+
+    /**
+     * TodoのIDを取得する関数
+     *
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
     }
 }
