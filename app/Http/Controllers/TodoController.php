@@ -36,7 +36,7 @@ class TodoController extends Controller
     }
 
     /**
-     * POST /todo/delete ページに関するController
+     * POST /todo/delete?id={id} ページに関するController
      *
      * @param \Illuminate\Http\Request $request
      *
@@ -57,7 +57,7 @@ class TodoController extends Controller
     }
 
     /**
-     * POST /todo/update/{id} ページに関するController
+     * POST /todo/update?id={id} ページに関するController
      *
      * @param \Illuminate\Http\Request $request
      *

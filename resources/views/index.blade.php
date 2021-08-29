@@ -33,7 +33,7 @@
                                 <td>
                                     {{ $item->getCreatedAt() }}
                                 </td>
-                                <form action="{{ route('todo.update', ['id' => $item->getId() ]) }}" method="POST">
+                                <form action="{{ '/todo/update?id=' . $item->getId() }}" method="POST">
                                     @csrf
                                     <td>
                                         <input type="text" name="content" class="text-update" value="{{ $item->getContent() }}" maxlength="20" required>
@@ -43,9 +43,8 @@
                                     </td>
                                 </form>
                                 <td>
-                                    <form action="/todo/delete" method="POST">
+                                    <form action="{{ '/todo/delete?id=' . $item->getId() }}" method="POST">
                                         @csrf
-                                        <input type="hidden" name="id" value="{{ $item->getId() }}">
                                         <button class="submit-delete">削除</button>
                                     </form>
                                 </td>
