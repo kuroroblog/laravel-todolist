@@ -76,33 +76,4 @@ class TodoController extends Controller
          */
         return redirect('/');
     }
-
-    /**
-     * GET /todo/create ページに関するController
-     *
-     */
-    public function add()
-    {
-        return view('/todo/add');
-    }
-
-    /**
-     * GET /todo/update/{id} ページに関するController
-     *
-     * @param \Illuminate\Http\Request $request
-     */
-    public function edit(Request $request)
-    {
-        $content = Content::find($request->id);
-        /**
-         * 参考 : https://www.php.net/manual/ja/function.is-null.php
-         */
-        if (is_null($content)) {
-            /**
-             * 参考 : https://readouble.com/laravel/8.x/ja/errors.html
-             */
-            abort(404);
-        }
-        return view('/todo/update', ['item' => $content]);
-    }
 }
